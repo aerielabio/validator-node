@@ -1,0 +1,77 @@
+version: "3.9"
+services:
+  # We run a validator client with 64, deterministically-generated keys that match
+  # The validator keys present in the beacon chain genesis state generated a few steps above.
+  validator:
+    image: "gcr.io/prysmaticlabs/prysm/validator:v4.0.6"
+    networks:
+      mainnet_aerie_validator:
+        ipv4_address: 172.20.0.2
+    command:
+      - --beacon-rpc-provider=${BEACON_IP}:${BEACON_RPC_PORT}
+      - --datadir=/consensus/validatordata
+      - --accept-terms-of-use
+      - --monitoring-host=0.0.0.0
+      #- --enable-tracing
+      - --monitoring-port=${VAL_MONITORING_PORT}
+      - --chain-config-file=/misc/config.yml
+      # Additional
+      - --wallet-dir=/misc/wallet-dir
+      - --wallet-password-file=/misc/validatorpass.txt
+    ports:
+      - "${VAL_MONITORING_PORT}:${VAL_MONITORING_PORT}"
+    volumes:
+      - type: bind
+        source: ./consensus
+        target: /consensus
+      - type: bind
+        source: ./misc
+        target: /misc
+  prometheus:
+    image: "prom/prometheus:latest"
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - ./misc/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - 9090:9090
+    depends_on:
+      validator:
+        condition: service_started
+    networks:
+      mainnet_aerie_validator:
+        ipv4_address: 172.20.0.3
+  docker-exporter:
+    image: "wywywywy/docker_stats_exporter:latest"
+    volumes:
+      - ./var/run/docker.sock:/var/run/docker.sock
+    expose:
+      - 9487
+    depends_on:
+      prometheus:
+        condition: service_started
+    networks:
+      mainnet_aerie_validator:
+        ipv4_address: 172.20.0.4
+  grafana:
+    image: grafana/grafana:7.5.7
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+    volumes:
+      - ./misc/grafana:/etc/grafana/provisioning/datasources
+      - grafana-data:/var/lib/grafana
+    depends_on:
+      prometheus:
+        condition: service_started
+    networks:
+      mainnet_aerie_validator:
+        ipv4_address: 172.20.0.5
+volumes:
+  grafana-data:
+networks:
+  mainnet_aerie_validator:
+    name: mainnet_aerie_validator
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.20.0.0/16"
