@@ -3,7 +3,7 @@ services:
   # We run a validator client with 64, deterministically-generated keys that match
   # The validator keys present in the beacon chain genesis state generated a few steps above.
   validator:
-    image: "gcr.io/prysmaticlabs/prysm/validator:v4.0.6"
+    image: "gcr.io/prysmaticlabs/prysm/validator:v4.0.7"
     networks:
       mainnet_aerie_validator:
         ipv4_address: 172.20.0.2
@@ -18,6 +18,7 @@ services:
       # Additional
       - --wallet-dir=/misc/wallet-dir
       - --wallet-password-file=/misc/validatorpass.txt
+      - --verbosity=debug
     ports:
       - "${VAL_MONITORING_PORT}:${VAL_MONITORING_PORT}"
     volumes:

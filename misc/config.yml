@@ -6,9 +6,9 @@ PRESET_BASE: "mainnet"
 # ---------------------------------------------------------------
 # Estimated on Sept 15, 2022
 TERMINAL_TOTAL_DIFFICULTY: 0
-# By default, don't use these params
-TERMINAL_BLOCK_HASH: 0x0000000000000000000000000000000000000000000000000000000000000000
-TERMINAL_BLOCK_HASH_ACTIVATION_EPOCH: 18446744073709551615
+# # By default, don't use these params
+# TERMINAL_BLOCK_HASH: 0x0000000000000000000000000000000000000000000000000000000000000000
+# TERMINAL_BLOCK_HASH_ACTIVATION_EPOCH: 18446744073709551615
 
 # Genesis
 # ---------------------------------------------------------------
@@ -47,7 +47,7 @@ MIN_VALIDATOR_WITHDRAWABILITY_DELAY: 256
 # 2**8 (= 256) epochs ~27 hours
 SHARD_COMMITTEE_PERIOD: 256
 # 2**11 (= 2,048) Eth1 blocks ~8 hours
-ETH1_FOLLOW_DISTANCE: 2880
+#ETH1_FOLLOW_DISTANCE: 2880
 
 # Validator cycle
 # ---------------------------------------------------------------
