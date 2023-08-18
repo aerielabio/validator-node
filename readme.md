@@ -3,7 +3,7 @@
 
   
 ## Dependencies
-1. CL & EL Node running properly, visit [here](https://github.com/aerielabio/public-node) for more details
+1. CL & EL Node running properly, visit [here](https://github.com/aerielabio/public-node) for more details , DONT MAKE DEPOSIT UNTIL YOUR PUBLIC NODE RUNNING
 2.  Deposits visit https://github.com/aerielabio/aerie-val-tools/ . We will release the GUI Version soon
 3. Docker & Docker-compose installed
 
