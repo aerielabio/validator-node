@@ -18,8 +18,8 @@ services:
       # Additional
       - --wallet-dir=/misc/wallet-dir
       - --wallet-password-file=/misc/validatorpass.txt
-      - --verbosity=debug
-      - --log-file=/misc/logs/validatorlog.txt
+      #- --verbosity=debug
+      #- --log-file=/misc/logs/validatorlog.txt
     ports:
       - "${VAL_MONITORING_PORT}:${VAL_MONITORING_PORT}"
     volumes:
