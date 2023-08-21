@@ -18,6 +18,8 @@ services:
       # Additional
       - --wallet-dir=/misc/wallet-dir
       - --wallet-password-file=/misc/validatorpass.txt
+      - --suggested-fee-recipient=${FEE_RECIPIENT}
+      - --graffiti=${GRAFFITI}
       #- --verbosity=debug
       #- --log-file=/misc/logs/validatorlog.txt
     ports:
